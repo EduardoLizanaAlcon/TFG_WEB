@@ -305,7 +305,7 @@ class PartidaControlador extends Controlador {
 
                             $responseCartasPorJugar = $this->modeloBaraja->ObservarTuscartas($datos['idBaraja'], $jugadorId);
 
-                            if($responseCartasPorJugar['piles']['remaining'] = 0){
+                            if($responseCartasPorJugar['piles'][$jugadorId]['remaining'] === 0){
                                 $ultimaJugada = true;
                             }
 
@@ -456,15 +456,12 @@ class PartidaControlador extends Controlador {
                 $estadoPartida = 'Continuar';
 
             } else {
-                $infoConteo = $this->calcularPuntos($idBaraja, true, $ganador, $cartasAGuardar);
+                    $infoConteo = $this->calcularPuntos($idBaraja, true, $ganador, $cartasAGuardar);
 
                     $n = $this->modeloPartida->obtenerNumSets($idBaraja);
-
                     if ($n < 3) {
-                        
                         $this->RepartoInicial($idBaraja, $jugadores);
                         $estadoPartida = 'nuevo_set_creado';
-
                     }else {
                      // Si ya se jugaron los 3 sets o se detecta final definitivo
                             $infoPartida = $this->modeloPartida->esPartidaFinalizada($idBaraja);
